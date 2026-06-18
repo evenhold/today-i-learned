@@ -9,6 +9,11 @@ on:
     paths:
       - '**/*.md' # Optimización: Solo se ejecuta si los archivos modificados o agregados son archivos Markdown (.md)
 
+# 💡 Evita que múltiples ejecuciones se pisen entre sí
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # Define la lista de tareas (jobs) que correrán en los servidores en la nube de GitHub
 jobs:
   build:
@@ -29,13 +34,19 @@ jobs:
         uses: actions/setup-node@v5 # 💡 Recomendado actualizar a v5 para soporte nativo completo
         with:
           node-version: 24 # 🔥 Cambiado de 20 a 24
+          # Cachea dependencias automáticamente (útil cuando agregues paquetes de npm)
+          cache: 'npm'
 
       # Paso 3: Ejecuta tu script de Node.js para que analice los archivos y modifique el README.md localmente
       - name: Run Index Script
         run: node .github/scripts/generate-index.mjs
+        env:
+          NODE_ENV: ${{ vars.NODE_ENV }} # Usa 'vars' para variables visibles en texto plano, 'secrets' para texto no visible.
 
       # Paso 4: Detecta si el README.md cambió, y si es así, crea un commit y lo sube automáticamente a GitHub
       - name: Commit and Push Changes
+        # Solo hace commit si el script realmente modificó el README.md
+        if: success()
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           # Mensaje del commit automático. Incluye '[skip ci]' para evitar que este commit automático active la Action otra vez en bucle.
