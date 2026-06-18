@@ -26,9 +26,9 @@ jobs:
 
       # Paso 2: Descarga e instala el entorno de Node.js en la máquina virtual
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5 # 💡 Recomendado actualizar a v5 para soporte nativo completo
         with:
-          node-version: 20 # Usamos Node.js 20 LTS para asegurar máxima estabilidad y compatibilidad con MJS
+          node-version: 24 # 🔥 Cambiado de 20 a 24
 
       # Paso 3: Ejecuta tu script de Node.js para que analice los archivos y modifique el README.md localmente
       - name: Run Index Script
