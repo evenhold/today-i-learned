@@ -1,0 +1,42 @@
+# Nombre descriptivo del flujo de trabajo que aparecerá en la pestaña "Actions" de GitHub
+name: Generate Auto Index
+
+# Define los "disparadores" o eventos que activarán la ejecución automática de este script
+on:
+  push:
+    branches:
+      - main # Se activa únicamente cuando haces un 'git push' a la rama principal (main)
+    paths:
+      - '**/*.md' # Optimización: Solo se ejecuta si los archivos modificados o agregados son archivos Markdown (.md)
+
+# Define la lista de tareas (jobs) que correrán en los servidores en la nube de GitHub
+jobs:
+  build:
+    runs-on: ubuntu-latest # El script se ejecutará dentro de una máquina virtual limpia con Linux Ubuntu
+
+    # Otorgamos permisos explícitos al proceso para poder modificar y subir cambios al repositorio
+    permissions:
+      contents: write # Requerido obligatoriamente para que el bot pueda hacer 'git push' de vuelta
+
+    # Pasos secuenciales que la máquina virtual ejecutará uno por uno
+    steps:
+      # Paso 1: Descarga una copia del código de tu repositorio dentro de la máquina virtual
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Paso 2: Descarga e instala el entorno de Node.js en la máquina virtual
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Usamos Node.js 20 LTS para asegurar máxima estabilidad y compatibilidad con MJS
+
+      # Paso 3: Ejecuta tu script de Node.js para que analice los archivos y modifique el README.md localmente
+      - name: Run Index Script
+        run: node .github/scripts/generate-index.mjs
+
+      # Paso 4: Detecta si el README.md cambió, y si es así, crea un commit y lo sube automáticamente a GitHub
+      - name: Commit and Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          # Mensaje del commit automático. Incluye '[skip ci]' para evitar que este commit automático active la Action otra vez en bucle.
+          commit_message: "docs: automatic index update [skip ci]"

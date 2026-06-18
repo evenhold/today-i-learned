@@ -44,9 +44,14 @@ Context or problem statement goes here.
 \`\`\`
 ```
 
-## 🗂️ Index of Entries
+---
+## Index of Entries
 
 <!-- START_INDEX -->
+*   **Linux**
+    *   [How to find and delete directories with identical names](./linux/find-remove-folders.md)
+*   **Nodejs**
+    *   [Understanding the Node.js Event Loop](./nodejs/event-loop.md)
 <!-- END_INDEX -->
 
 ---
