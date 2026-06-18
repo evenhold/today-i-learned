@@ -1,4 +1,4 @@
-# 🚀 Developer Log & TIL (Today I Learned)
+# Developer Log & TIL (Today I Learned)
 
 Welcome! This repository serves as my personal digital notebook and knowledge base. Here, I document commands, configurations, micro-patterns, and troubleshooting steps that I encounter and learn in my daily workflow as a Node.js developer.
 
@@ -6,16 +6,16 @@ The goal is to keep a fast, searchable, and practical reference for my future se
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 The log is categorized into clean directories based on technologies and ecosystems:
 
-*   📁 **`linux/`** – Shell scripting, CLI tools, server automation, and system administration.
-*   📁 **`nodejs/`** – Core runtime concepts, event loop optimization, and asynchronous patterns.
+*   **`linux/`** – Shell scripting, CLI tools, server automation, and system administration.
+*   **`nodejs/`** – Core runtime concepts, event loop optimization, and asynchronous patterns.
 
 ---
 
-## 🛠️ Contribution & Template
+## Contribution & Template
 
 Every entry follows a strict Markdown structure with frontmatter metadata. This ensures the entire repository is ready to be parsed and rendered by a static site generator like **Astro Starlight** in the future.
 
@@ -43,6 +43,11 @@ Context or problem statement goes here.
 * Gotchas, edge cases, or performance considerations.
 \`\`\`
 ```
+
+## 🗂️ Index of Entries
+
+<!-- START_INDEX -->
+<!-- END_INDEX -->
 
 ---
 *Feel free to browse around! If you find any command helpful, don't forget to drop a ⭐️.*
